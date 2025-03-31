@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Applicant Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Applicant Dashboard</h2>
+    <p>Welcome, {{ current_user.username }}!</p>
+
+    <h3>Available Jobs</h3>
+    <ul>
+        {% for job in jobs %}
+            <li>{{ job.title }} - <a href="{{ url_for('job_detail', job_id=job.id) }}">Apply</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

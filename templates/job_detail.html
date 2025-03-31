@@ -1,0 +1,23 @@
+<!-- templates/job_detail.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block content %}
+    <h2>{{ job.title }}</h2>
+    <p><strong>Location:</strong> {{ job.location }}</p>
+    <p><strong>Description:</strong> {{ job.description }}</p>
+
+    {% if current_user.is_authenticated %}
+        <h4>Apply for this job</h4>
+        <form action="{{ url_for('apply', job_id=job.id) }}" method="POST" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="resume" class="form-label">Upload Resume</label>
+                <input type="file" class="form-control" name="resume" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Apply</button>
+        </form>
+    {% else %}
+        <p><a href="{{ url_for('login') }}">Login</a> to apply for this job.</p>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Recruiter Dashboard{% endblock %}
+
+{% block content %}
+<h2>Recruiter Dashboard</h2>
+<p>Welcome, {{ current_user.username }}!</p>
+
+<h3>Your Job Listings</h3>
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for job in jobs %}
+            {% if job.recruiter_id == current_user.id %}
+                <tr>
+                    <td>{{ job.title }}</td>
+                    <td>{{ job.location }}</td>
+                    <td>
+                        <a href="{{ url_for('job_detail', job_id=job.id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ url_for('delete_job', job_id=job.id) }}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure?');">Delete</a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+<a href="{{ url_for('post_job') }}" class="btn btn-success">Post a New Job</a>
+{% endblock %}

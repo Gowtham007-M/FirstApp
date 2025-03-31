@@ -1,0 +1,35 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Dashboard</h2>
+
+    <h4 class="mt-4">Post a New Job</h4>
+    <form method="POST" action="{{ url_for('add_job') }}">
+        <div class="mb-3">
+            <label for="title" class="form-label">Job Title</label>
+            <input type="text" class="form-control" name="title" required>
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" name="location" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" name="description" rows="3" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Post Job</button>
+    </form>
+
+    <h4 class="mt-4">Job Listings</h4>
+    <ul class="list-group">
+        {% for job in jobs %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ job.title }} - {{ job.location }}
+                <a href="{{ url_for('delete_job', job_id=job.id) }}" class="btn btn-danger btn-sm">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
